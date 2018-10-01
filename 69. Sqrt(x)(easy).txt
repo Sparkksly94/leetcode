@@ -1,0 +1,56 @@
+"""
+Implement int sqrt(int x).
+
+Compute and return the square root of x, where x is guaranteed to be a non-negative integer.
+
+Since the return type is an integer, the decimal digits are truncated and only the integer part of the result is returned.
+
+Example 1:
+
+Input: 4
+Output: 2
+Example 2:
+
+Input: 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since 
+             the decimal part is truncated, 2 is returned.
+"""
+
+#My answer:
+class Solution:
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        if x==0: return 0
+        if x<4: return 1
+        ret=2
+        tempup=0
+        tempbot=0
+        while ret**2<x:
+            tempbot=ret
+            ret=ret**2
+        while True:
+            if (ret-1)**2<=x and ret**2>x:
+                return ret-1
+            elif ret**2==x:
+                return ret
+            elif ret**2<x:
+                ret,tempbot=(tempup+ret)//2,ret
+            elif (ret-1)**2>x:
+                ret,tempup=(ret+tempbot)//2,ret
+
+#Better Answer
+class Solution:
+    def mySqrt(self, x):
+        l, r = 0, x
+        while l <= r:
+            mid = l + (r-l)//2
+            if mid * mid <= x < (mid+1)*(mid+1):
+                return mid
+            elif x < mid * mid:
+                r = mid
+            else:
+                l = mid + 1

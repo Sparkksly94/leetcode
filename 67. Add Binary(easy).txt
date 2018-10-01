@@ -1,0 +1,74 @@
+"""
+Given two binary strings, return their sum (also a binary string).
+
+The input strings are both non-empty and contains only characters 1 or 0.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+"""
+
+#My answer:
+class Solution:
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        ret=""
+        if len(a)<len(b):
+            while len(a)<len(b):
+                a="0"+a
+        else:
+            while len(a)>len(b):
+                b="0"+b
+        l=len(a)-1
+        temp=0
+        for i in range(len(a)):
+            if temp==0:
+                if a[l-i]=="1" and b[l-i]=="1":
+                    temp=1
+                    ret="0"+ret
+                elif a[l-i]=="0" and b[l-i]=="0":
+                    ret="0"+ret
+                    temp=0
+                else:
+                    ret="1"+ret
+                    temp=0
+            else:
+                if a[l-i]=="1" and b[l-i]=="1":
+                    temp=1
+                    ret="1"+ret
+                elif a[l-i]=="0" and b[l-i]=="0":
+                    ret="1"+ret
+                    temp=0
+                else:
+                    temp=1
+                    ret="0"+ret
+        if temp==1:
+            return "1"+ret
+        else:
+            return ret
+                
+if '' in (a, b): return a or b
+    if a[-1] == '1' and b[-1] == '1':
+        return self.addBinary('1', self.addBinary(a[:-1], b[:-1])) + '0'
+    if a[-1] == '0' and b[-1] == '0':
+        return self.addBinary(a[:-1], b[:-1]) + '0'
+    return self.addBinary(a[:-1], b[:-1]) + '1'
+
+#Better Answer:
+class Solution:
+    def addBinary(self, a, b):
+        if '' in (a, b): return a or b
+        if a[-1] == '1' and b[-1] == '1':
+            return self.addBinary('1', self.addBinary(a[:-1], b[:-1])) + '0'
+        if a[-1] == '0' and b[-1] == '0':
+            return self.addBinary(a[:-1], b[:-1]) + '0'
+        return self.addBinary(a[:-1], b[:-1]) + '1'
