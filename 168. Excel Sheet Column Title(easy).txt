@@ -1,0 +1,49 @@
+"""
+Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+
+For example:
+
+    1 -> A
+    2 -> B
+    3 -> C
+    ...
+    26 -> Z
+    27 -> AA
+    28 -> AB 
+    ...
+Example 1:
+
+Input: 1
+Output: "A"
+Example 2:
+
+Input: 28
+Output: "AB"
+Example 3:
+
+Input: 701
+Output: "ZY"
+"""
+
+#My answer:
+class Solution:
+    def convertToTitle(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        ret=''
+        while n>0:
+            cur=n%26
+            if cur==0:
+                n=(n-26)/26
+                ret='Z'+ret
+
+#Better Answer:
+return "" if num == 0 else self.convertToTitle((num - 1) / 26) + chr((num - 1) % 26 + ord('A'))
+            else:
+                n=(n-cur)/26
+                cur+=64
+                ret=chr(int(cur))+ret
+        return ret
+            
