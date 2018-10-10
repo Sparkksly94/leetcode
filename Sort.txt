@@ -1,0 +1,51 @@
+#冒泡排序 Bubble Sort
+def bubble_sort(arry):
+    n=len(arry)
+    for i in range(n):
+        for j in range(1,n-i):
+            if arry[j-1]>arry[j]:
+                arry[j-1],arry[j]=arry[j],arry[j-1]
+    return arry
+
+#选择排序 Selection Sort
+def select_sort(arry):
+    n=len(arry)
+    for i in range(n):
+        for j in range(i+1,n):
+            if arry[j]<arry[i]:
+                arry[j],arry[i]=arry[i],arry[j]
+    return arry
+
+#插入排序 Insertion Sort
+def insert_sort(arry):
+    n=len(arry)
+    for i in range(1,n):
+        if arry[i]<arry[i-1]:
+            temp = arry[i]
+            index= i
+            for j in range(i-1,-1,-1):
+                if arry[j]>temp:
+                    arry[j+1]=arry[j]
+                    index=j
+                else:
+                    break
+            arry[index]=temp
+    return arry
+
+#希尔排序 Shell Sort
+def shell_sort(arry):
+    n = len(arry)
+    gap = n // 2
+    while gap > 0:
+        for i in range(gap, n):
+            # 每个步长进行插入排序
+            temp = list[i]
+            j = i
+            # 插入排序
+            while j >= gap and list[j - gap] > temp:
+                list[j] = list[j - gap]
+                j -= gap
+            list[j] = temp
+        # 得到新的步长
+        gap = gap // 2
+    return list
