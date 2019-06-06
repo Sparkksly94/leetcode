@@ -1,0 +1,111 @@
+"""
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+ 
+
+But the following [1,2,2,null,3,null,3] is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+"""
+
+#My answer:
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def preorder(root,pre):
+            if not root:
+                pre.append('null')
+            else:
+                if root.left or root.right:
+                    if root.left:
+                        print(root.left.val)
+                        preorder(root.left,pre)
+                    else:
+                        pre.append('null')
+                    if root.right:
+                        preorder(root.right,pre)
+                    else:
+                        pre.append('null')
+                pre.append(root.val)
+            return pre
+        def invorder(root, inv):
+            if not root:
+                inv.append('null')
+            else:
+                if root.left or root.right:
+                    if root.right:
+                        invorder(root.right,inv)
+                    else:
+                        inv.append('null')
+                    if root.left:
+                        invorder(root.left,inv)
+                    else:
+                        inv.append('null')
+                inv.append(root.val)
+            return inv
+        pre=preorder(root,[])
+        inv=invorder(root,[])
+        return pre==inv
+
+#Better Answer:
+class Solution:
+  def isSymmetric(self, root):
+    if root is None:
+      return True
+    else:
+      return self.isMirror(root.left, root.right)
+
+  def isMirror(self, left, right):
+    if left is None and right is None:
+      return True
+    if left is None or right is None:
+      return False
+
+    if left.val == right.val:
+      outPair = self.isMirror(left.left, right.right)
+      inPiar = self.isMirror(left.right, right.left)
+      return outPair and inPiar
+    else:
+      return False
+The essence of recursively is Stack, so we can use our own stack to rewrite it into iteratively:
+
+ class Solution2:
+  def isSymmetric(self, root):
+    if root is None:
+      return True
+
+    stack = [[root.left, root.right]]
+
+    while len(stack) > 0:
+      pair = stack.pop(0)
+      left = pair[0]
+      right = pair[1]
+
+      if left is None and right is None:
+        continue
+      if left is None or right is None:
+        return False
+      if left.val == right.val:
+        stack.insert(0, [left.left, right.right])
+
+        stack.insert(0, [left.right, right.left])
+      else:
+        return False
+    return True
